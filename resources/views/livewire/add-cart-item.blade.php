@@ -22,7 +22,7 @@
             </x-jet-secondary-button >
         </div>
         <div class="flex-1">
-            <x-button
+            <x-button dusk="carrito"
                 x-bind:disabled="$wire.qty > $wire.quantity"
                 wire:click="addItem"
                 wire:loading.attr="disabled"

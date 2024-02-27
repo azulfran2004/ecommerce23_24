@@ -2,11 +2,11 @@
     <div>
         <p class="text-xl text-gray-700">Talla:</p>
 
-        <select wire:model="size_id" class="form-control w-full">
+        <select dusk="selectSize" wire:model="size_id" class="form-control w-full">
             <option value="" selected disabled>Seleccione una talla</option>
 
             @foreach ($sizes as $size)
-                <option value="{{$size->id}}">{{$size->name}}</option>
+                <option dusk="selectSize-id-{{ $size->id }}" value="{{$size->id}}">{{$size->name}}</option>
             @endforeach
         </select>
     </div>
@@ -14,11 +14,11 @@
     <div class="mt-2">
         <p class="text-xl text-gray-700">Color:</p>
 
-        <select wire:model="color_id" class="form-control w-full">
+        <select dusk="selectColor" wire:model="color_id" class="form-control w-full">
             <option value="" selected disabled>Seleccione un color</option>
 
             @foreach ($colors as $color)
-                <option value="{{$color->id}}">{{__(ucfirst($color->name))}}</option>
+                <option dusk="selectColor-id-{{ $color->id }}" value="{{$color->id}}">{{__(ucfirst($color->name))}}</option>
             @endforeach
         </select>
     </div>
@@ -52,7 +52,7 @@
             </x-jet-secondary-button>
         </div>
         <div class="flex-1">
-            <x-button
+            <x-button dusk="carrito"
                 x-bind:disabled="$wire.qty > $wire.quantity"
                 x-bind:disabled="!$wire.quantity"
                 wire:click="addItem"
