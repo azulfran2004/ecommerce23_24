@@ -28,17 +28,18 @@ class ShowProducts extends Component
         $ordenar = $this->ordenar;
         $direccionOrden = $this->direccionOrden;
 
-        
-        $products = Product::where('name', 'LIKE', "%{$this->search}%");
-        
-        $products = $products->orderBy("$ordenar", $direccionOrden)
-        ->paginate(10);        
-        $orders= Order::all();
 
-        return view('livewire.admin.show-products', compact('products','orders'))->layout('layouts.admin');
+        $products = Product::where('name', 'LIKE', "%{$this->search}%");
+
+        $products = $products->orderBy("$ordenar", $direccionOrden)
+            ->paginate(10);
+        $orders = Order::all();
+
+        return view('livewire.admin.show-products', compact('products', 'orders'))->layout('layouts.admin');
     }
 
-
+    /*he puesto que se ordene por nombre y por cantidad. porque no he sido capaz de hacer que se ordene por vendidos y pendientes.
+pero la logica si funciona*/
     public function ordenarPorVendidos()
     {
         $this->cambiarDireccionOrden();

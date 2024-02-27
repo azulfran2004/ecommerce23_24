@@ -313,11 +313,10 @@ class Ejercicio3Test extends DuskTestCase
                 ->click('@carritodesplegable')
                 ->pause(1000)
                 ->screenshot('/orders/create')
-                //->assertSeeIn('@carritolink', 'Ir al carrito de compras')
                 ->visit('/shopping-cart')
                 ->pause(1000)
                 ->screenshot('/shopping-cart')
-                ->assertSee('samsung', 'samsung1','4','2','1', 'samsung2')
+                ->assertSee('samsung', 'samsung1','4','2','1', 'samsung2','120','99.99','99.98')
                 ;
         });
     }
