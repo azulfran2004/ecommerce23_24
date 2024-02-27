@@ -11,10 +11,12 @@ use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Traits\CreateData;
 
 class Semana1Test extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, CreateData;
+
     public function testvercategorias()
     {
 
@@ -47,11 +49,7 @@ class Semana1Test extends DuskTestCase
             ],
         ];
 
-        $categories = [];
-
-        foreach ($categoriesData as $categoryData) {
-            $categories[] = Category::factory()->create($categoryData);
-        }
+        $categories = $this->createCategories($categoriesData);
 
         $subcategoriesData = [
             [
@@ -65,118 +63,21 @@ class Semana1Test extends DuskTestCase
                 'name' => 'Accesorios para celulares',
                 'slug' => Str::slug('Accesorios para celulares'),
             ],
+
             [
                 'category_id' => $categories[0]->id,
                 'name' => 'Smartwatches',
                 'slug' => Str::slug('Smartwatches'),
             ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'TV y audio',
-                'slug' => Str::slug('TV y audio'),
-            ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'Audios',
-                'slug' => Str::slug('Audios'),
-            ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'Audio para autos',
-                'slug' => Str::slug('Audio para autos'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Xbox',
-                'slug' => Str::slug('xbox'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Play Station',
-                'slug' => Str::slug('Play Station'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Videojuegos para PC',
-                'slug' => Str::slug('Videojuegos para PC'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Nintendo',
-                'slug' => Str::slug('Nintendo'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Portátiles',
-                'slug' => Str::slug('Portátiles'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'PC escritorio',
-                'slug' => Str::slug('PC escritorio'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Almacenamiento',
-                'slug' => Str::slug('Almacenamiento'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Accesorios computadoras',
-                'slug' => Str::slug('Accesorios computadoras'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Mujeres',
-                'slug' => Str::slug('Mujeres'),
-                'color' => true,
-                'size' => true
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Hombres',
-                'slug' => Str::slug('Hombres'),
-                'color' => true,
-                'size' => true
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Lentes',
-                'slug' => Str::slug('Lentes'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Relojes',
-                'slug' => Str::slug('Relojes'),
-            ],
+
         ];
-        $subcategoryes = [];
 
-        foreach ($subcategoriesData as $subcategoryData) {
-            $subcategoryes[] = Subcategory::factory()->create($subcategoryData);
-        }
+        $subcategories = $this->createSubcategories($subcategoriesData, $categories);
 
-        Brand::factory()->create(['name' => 'Samsung'])->categories()->attach($categories[0]->id);
-        Brand::factory()->create(['name' => 'Samsung2'])->categories()->attach($categories[1]->id);
-        Brand::factory()->create(['name' => 'Samsung3'])->categories()->attach($categories[2]->id);
-        Brand::factory()->create(['name' => 'Samsung4'])->categories()->attach($categories[3]->id);
-        Brand::factory()->create(['name' => 'Samsung5'])->categories()->attach($categories[4]->id);
+        $brandNames = ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'];
+        $this->createBrands($brandNames, $categories);
 
-
-        $products = [];
-        foreach ($subcategoryes as $subcategory) {
-            $products[] = Product::factory(2)->create(['subcategory_id' => $subcategory->id,]);
-        }
-
-
-        foreach ($products as $product) {
-            $product->each(function (Product $product) {
-                Image::factory(4)->create([
-                    'imageable_id' => $product->id,
-                    'imageable_type' => Product::class
-                ]);
-            });
-        }
+        $products = $this->createProducts($subcategories);
 
 
         $this->browse(function (Browser $browser) {
@@ -222,11 +123,7 @@ class Semana1Test extends DuskTestCase
             ],
         ];
 
-        $categories = [];
-
-        foreach ($categoriesData as $categoryData) {
-            $categories[] = Category::factory()->create($categoryData);
-        }
+        $categories = $this->createCategories($categoriesData);
 
         $subcategoriesData = [
             [
@@ -240,119 +137,15 @@ class Semana1Test extends DuskTestCase
                 'name' => 'Accesorios para celulares',
                 'slug' => Str::slug('Accesorios para celulares'),
             ],
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Smartwatches',
-                'slug' => Str::slug('Smartwatches'),
-            ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'TV y audio',
-                'slug' => Str::slug('TV y audio'),
-            ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'Audios',
-                'slug' => Str::slug('Audios'),
-            ],
-            [
-                'category_id' => $categories[1]->id,
-                'name' => 'Audio para autos',
-                'slug' => Str::slug('Audio para autos'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Xbox',
-                'slug' => Str::slug('xbox'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Play Station',
-                'slug' => Str::slug('Play Station'),
-            ],
-            [
-                'category_id' => $categories[2]->id,
-                'name' => 'Videojuegos para PC',
-                'slug' => Str::slug('Videojuegos para PC'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Nintendo',
-                'slug' => Str::slug('Nintendo'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Portátiles',
-                'slug' => Str::slug('Portátiles'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'PC escritorio',
-                'slug' => Str::slug('PC escritorio'),
-            ],
-            [
-                'category_id' => $categories[3]->id,
-                'name' => 'Almacenamiento',
-                'slug' => Str::slug('Almacenamiento'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Accesorios computadoras',
-                'slug' => Str::slug('Accesorios computadoras'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Mujeres',
-                'slug' => Str::slug('Mujeres'),
-                'color' => true,
-                'size' => true
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Hombres',
-                'slug' => Str::slug('Hombres'),
-                'color' => true,
-                'size' => true
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Lentes',
-                'slug' => Str::slug('Lentes'),
-            ],
-            [
-                'category_id' => $categories[4]->id,
-                'name' => 'Relojes',
-                'slug' => Str::slug('Relojes'),
-            ],
+
         ];
-        $subcategoryes = [];
 
-        foreach ($subcategoriesData as $subcategoryData) {
-            $subcategoryes[] = Subcategory::factory()->create($subcategoryData);
-        }
+        $subcategories = $this->createSubcategories($subcategoriesData, $categories);
 
-        Brand::factory()->create(['name' => 'Samsung'])->categories()->attach($categories[0]->id);
-        Brand::factory()->create(['name' => 'Samsung2'])->categories()->attach($categories[1]->id);
-        Brand::factory()->create(['name' => 'Samsung3'])->categories()->attach($categories[2]->id);
-        Brand::factory()->create(['name' => 'Samsung4'])->categories()->attach($categories[3]->id);
-        Brand::factory()->create(['name' => 'Samsung5'])->categories()->attach($categories[4]->id);
+        $brandNames = ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'];
+        $this->createBrands($brandNames, $categories);
 
-
-        $products = [];
-        foreach ($subcategoryes as $subcategory) {
-            $products[] = Product::factory(2)->create(['subcategory_id' => $subcategory->id,]);
-        }
-
-
-        foreach ($products as $product) {
-            $product->each(function (Product $product) {
-                Image::factory(4)->create([
-                    'imageable_id' => $product->id,
-                    'imageable_type' => Product::class
-                ]);
-            });
-        }
-
+        $products = $this->createProducts($subcategories);
 
 
         $this->browse(function (Browser $browser) {
