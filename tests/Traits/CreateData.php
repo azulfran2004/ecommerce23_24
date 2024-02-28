@@ -8,6 +8,10 @@ use App\Models\Brand;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use App\Models\Color;
+use App\Models\Size;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 trait CreateData
 {
@@ -45,7 +49,10 @@ trait CreateData
         $products = [];
 
         foreach ($subcategories as $subcategory) {
-            $products[] = Product::factory(2)->create(['subcategory_id' => $subcategory->id]);
+            $products[] = Product::factory(2)->create([
+                'subcategory_id' => $subcategory->id, 
+               
+            ]);
         }
 
         foreach ($products as $product) {
@@ -58,5 +65,104 @@ trait CreateData
         }
 
         return $products;
+    }
+
+
+
+
+    public function createAllData($data)
+    {
+        $categories = $this->createCategories($data['categories']);
+
+        $subcategories = $this->createSubcategories($data['subcategories'], $categories);
+
+        $this->createBrands($data['brandNames'], $categories);
+
+        $products = $this->createProducts($subcategories);
+
+        return [
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'products' => $products,
+        ];
+    }
+
+
+    public function createColors()
+    {
+        $colors = ['white', 'blue', 'red', 'black'];
+        foreach ($colors as $color) {
+            Color::create([
+                'name' => $color
+            ]);
+        }
+    }
+    public function attachColorsToProducts($products)
+    {
+        foreach ($products as $product) {
+            $product->colors()->attach([
+                1 => ['quantity' => 10],
+                2 => ['quantity' => 10],
+                3 => ['quantity' => 10],
+                4 => ['quantity' => 10]
+            ]);
+        }
+    }
+
+    public function createSizesForProducts($products)
+    {
+        $sizes = ['Talla S', 'Talla M', 'Talla L'];
+        foreach ($products as $product) {
+            foreach ($sizes as $size) {
+                $product->sizes()->create([
+                    'name' => $size
+                ]);
+            }
+        }
+    }
+
+    public function attachColorsToSizes()
+    {
+        $sizes = Size::all();
+        foreach ($sizes as $size) {
+            $size->colors()->attach([
+                1 => ['quantity' => 10],
+                2 => ['quantity' => 10],
+                3 => ['quantity' => 10],
+                4 => ['quantity' => 10]
+            ]);
+        }
+    }
+
+    public function createRoleAndUser()
+    {
+        $role = Role::create(['name' => 'admin']);
+        User::factory()->create([
+            'name' => 'Carlos Abrisqueta',
+            'email' => 'carlos@test.com',
+            'password' => bcrypt("cisco2004"),
+        ])->assignRole('admin');
+    }
+
+
+    public function createAllDataWithColors($data)
+    {
+        $categories = $this->createCategories($data['categories']);
+        $subcategories = $this->createSubcategories($data['subcategories'], $categories);
+        $this->createBrands($data['brandNames'], $categories);
+        $products = $this->createProducts($subcategories);
+
+        $this->createColors();
+        $this->attachColorsToProducts($products);
+        $this->createSizesForProducts($products);
+        $this->attachColorsToSizes();
+
+        $this->createRoleAndUser();
+
+        return [
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'products' => $products,
+        ];
     }
 }

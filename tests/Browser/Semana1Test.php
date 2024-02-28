@@ -21,63 +21,51 @@ class Semana1Test extends DuskTestCase
     {
 
 
-        $categoriesData = [
-            [
-                'name' => 'Celulares y tablets',
-                'slug' => Str::slug('Celulares y tablets'),
-                'icon' => '<i class="fas fa-mobile-alt"></i>'
+        $data = [
+            'categories' => [
+                [
+                    'name' => 'Celulares y tablets',
+                    'slug' => Str::slug('Celulares y tablets'),
+                    'icon' => '<i class="fas fa-mobile-alt"></i>'
+                ],
+                [
+                    'name' => 'TV, audio y video',
+                    'slug' => Str::slug('TV, audio y video'),
+                    'icon' => '<i class="fas fa-tv"></i>'
+                ],
+                [
+                    'name' => 'Consola y videojuegos',
+                    'slug' => Str::slug('Consola y videojuegos'),
+                    'icon' => '<i class="fas fa-gamepad"></i>'
+                ],
+                [
+                    'name' => 'Computación',
+                    'slug' => Str::slug('Computación'),
+                    'icon' => '<i class="fas fa-laptop"></i>'
+                ],
+                [
+                    'name' => 'Moda',
+                    'slug' => Str::slug('Moda'),
+                    'icon' => '<i class="fas fa-tshirt"></i>'
+                ],
             ],
-            [
-                'name' => 'TV, audio y video',
-                'slug' => Str::slug('TV, audio y video'),
-                'icon' => '<i class="fas fa-tv"></i>'
+            'subcategories' => [
+                [
+                    'category_id' => 1,  
+                    'name' => 'Celulares y smartphones',
+                    'slug' => Str::slug('Celulares y smartphones'),
+                    'color' => true
+                ],
+                [
+                    'category_id' => 1,
+                    'name' => 'Accesorios para celulares',
+                    'slug' => Str::slug('Accesorios para celulares'),
+                ],
             ],
-            [
-                'name' => 'Consola y videojuegos',
-                'slug' => Str::slug('Consola y videojuegos'),
-                'icon' => '<i class="fas fa-gamepad"></i>'
-            ],
-            [
-                'name' => 'Computación',
-                'slug' => Str::slug('Computación'),
-                'icon' => '<i class="fas fa-laptop"></i>'
-            ],
-            [
-                'name' => 'Moda',
-                'slug' => Str::slug('Moda'),
-                'icon' => '<i class="fas fa-tshirt"></i>'
-            ],
+            'brandNames' => ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'],
         ];
 
-        $categories = $this->createCategories($categoriesData);
-
-        $subcategoriesData = [
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Celulares y smartphones',
-                'slug' => Str::slug('Celulares y smartphones'),
-                'color' => true
-            ],
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Accesorios para celulares',
-                'slug' => Str::slug('Accesorios para celulares'),
-            ],
-
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Smartwatches',
-                'slug' => Str::slug('Smartwatches'),
-            ],
-
-        ];
-
-        $subcategories = $this->createSubcategories($subcategoriesData, $categories);
-
-        $brandNames = ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'];
-        $this->createBrands($brandNames, $categories);
-
-        $products = $this->createProducts($subcategories);
+        $result = $this->createAllData($data);
 
 
         $this->browse(function (Browser $browser) {
@@ -87,68 +75,59 @@ class Semana1Test extends DuskTestCase
         });
     }
 
+    
 
 
 
-
-    public function testversubcategorias()
+    public function testversubcategoriass()
     {
-
-
-        $categoriesData = [
-            [
-                'name' => 'Celulares y tablets',
-                'slug' => Str::slug('Celulares y tablets'),
-                'icon' => '<i class="fas fa-mobile-alt"></i>'
+        $data = [
+            'categories' => [
+                [
+                    'name' => 'Celulares y tablets',
+                    'slug' => Str::slug('Celulares y tablets'),
+                    'icon' => '<i class="fas fa-mobile-alt"></i>'
+                ],
+                [
+                    'name' => 'TV, audio y video',
+                    'slug' => Str::slug('TV, audio y video'),
+                    'icon' => '<i class="fas fa-tv"></i>'
+                ],
+                [
+                    'name' => 'Consola y videojuegos',
+                    'slug' => Str::slug('Consola y videojuegos'),
+                    'icon' => '<i class="fas fa-gamepad"></i>'
+                ],
+                [
+                    'name' => 'Computación',
+                    'slug' => Str::slug('Computación'),
+                    'icon' => '<i class="fas fa-laptop"></i>'
+                ],
+                [
+                    'name' => 'Moda',
+                    'slug' => Str::slug('Moda'),
+                    'icon' => '<i class="fas fa-tshirt"></i>'
+                ],
             ],
-            [
-                'name' => 'TV, audio y video',
-                'slug' => Str::slug('TV, audio y video'),
-                'icon' => '<i class="fas fa-tv"></i>'
+            'subcategories' => [
+                [
+                    'category_id' => 1,  
+                    'name' => 'Celulares y smartphones',
+                    'slug' => Str::slug('Celulares y smartphones'),
+                    'color' => true
+                ],
+                [
+                    'category_id' => 1,
+                    'name' => 'Accesorios para celulares',
+                    'slug' => Str::slug('Accesorios para celulares'),
+                ],
             ],
-            [
-                'name' => 'Consola y videojuegos',
-                'slug' => Str::slug('Consola y videojuegos'),
-                'icon' => '<i class="fas fa-gamepad"></i>'
-            ],
-            [
-                'name' => 'Computación',
-                'slug' => Str::slug('Computación'),
-                'icon' => '<i class="fas fa-laptop"></i>'
-            ],
-            [
-                'name' => 'Moda',
-                'slug' => Str::slug('Moda'),
-                'icon' => '<i class="fas fa-tshirt"></i>'
-            ],
+            'brandNames' => ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'],
         ];
 
-        $categories = $this->createCategories($categoriesData);
+        $result = $this->createAllData($data);
 
-        $subcategoriesData = [
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Celulares y smartphones',
-                'slug' => Str::slug('Celulares y smartphones'),
-                'color' => true
-            ],
-            [
-                'category_id' => $categories[0]->id,
-                'name' => 'Accesorios para celulares',
-                'slug' => Str::slug('Accesorios para celulares'),
-            ],
-
-        ];
-
-        $subcategories = $this->createSubcategories($subcategoriesData, $categories);
-
-        $brandNames = ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'];
-        $this->createBrands($brandNames, $categories);
-
-        $products = $this->createProducts($subcategories);
-
-
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $browser) use ($result) {
             $browser->visit('/')
                 ->clickLink('Categorías')
                 ->assertSee('Celulares y tablets', 'TV, audio y video', 'Consola y videojuegos', 'Computación', 'Moda')
@@ -156,7 +135,7 @@ class Semana1Test extends DuskTestCase
                 ->assertSee(
                     'Celulares y smartphones',
                     'Accesorios para celulares',
-                    'Smartwatches'
+                    'Smartwatches'  
                 );
         });
     }

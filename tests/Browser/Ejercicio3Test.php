@@ -174,8 +174,8 @@ class Ejercicio3Test extends DuskTestCase
 
         $products = [];
         $products[] = Product::factory()->create(['subcategory_id' => $subcategoryes[0]->id, 'name' => 'samsung', 'price' => '30']);
-        $products[] = Product::factory()->create(['subcategory_id' => $subcategoryes[1]->id, 'name' => 'samsung1']);
-        $products[] = Product::factory()->create(['subcategory_id' => $subcategoryes[2]->id, 'name' => 'samsung2']);
+        $products[] = Product::factory()->create(['subcategory_id' => $subcategoryes[1]->id, 'name' => 'samsung1', 'price' => '40']);
+        $products[] = Product::factory()->create(['subcategory_id' => $subcategoryes[2]->id, 'name' => 'samsung2', 'price' => '50']);
 
 
 
@@ -275,7 +275,6 @@ class Ejercicio3Test extends DuskTestCase
                 ->press('+')
                 ->press('+')
                 ->press('+')
-
                 ->press('@carrito')
                 ->pause(1000)
                 ->assertSee('1')
@@ -285,7 +284,6 @@ class Ejercicio3Test extends DuskTestCase
                 ->click('@selectColor-id-1')
                 ->click('@selectColor')
                 ->press('+')
-
                 ->press('@carrito')
                 ->pause(1000)
                 ->visit('/products/' . $products[2]->slug)
@@ -293,7 +291,7 @@ class Ejercicio3Test extends DuskTestCase
                 ->assertSee('samsung2')
                 ->press('@carrito')
                 ->pause(1000)
-                ->screenshot('/products/' . $products[2]->slug)               
+                ->screenshot('/products/' . $products[2]->slug)
                 ->click('@carritodesplegable')
                 ->click('@carritolink')
                 ->visit('/orders/create')
@@ -315,9 +313,16 @@ class Ejercicio3Test extends DuskTestCase
                 ->screenshot('/orders/create')
                 ->visit('/shopping-cart')
                 ->pause(1000)
+                ->pause(1000)
                 ->screenshot('/shopping-cart')
-                ->assertSee('samsung', 'samsung1','4','2','1', 'samsung2','120','99.99','99.98')
-                ;
+                ->assertSee('samsung')
+                ->assertSee('4')
+                ->assertSee('2')
+                ->assertSee('1')
+                ->assertSee('samsung2')
+                ->assertSee('120')
+                ->assertSee('80')
+                ->assertSee('50');
         });
     }
 }

@@ -13,10 +13,12 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\Color;
 use App\Models\Size;
+use Tests\Traits\CreateData;
+
 
 class Semana2Test extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, CreateData;
 
 
     public function testmin5productsforeachcategory()
@@ -196,6 +198,68 @@ class Semana2Test extends DuskTestCase
         });
     }
 
+    public function testmin5productsforeachcategory2()
+    {
+        $data = [
+            'categories' => [
+                [
+                    'name' => 'Celulares y tablets',
+                    'slug' => Str::slug('Celulares y tablets'),
+                    'icon' => '<i class="fas fa-mobile-alt"></i>'
+                ],
+                [
+                    'name' => 'TV, audio y video',
+                    'slug' => Str::slug('TV, audio y video'),
+                    'icon' => '<i class="fas fa-tv"></i>'
+                ],
+                [
+                    'name' => 'Consola y videojuegos',
+                    'slug' => Str::slug('Consola y videojuegos'),
+                    'icon' => '<i class="fas fa-gamepad"></i>'
+                ],
+                [
+                    'name' => 'Computación',
+                    'slug' => Str::slug('Computación'),
+                    'icon' => '<i class="fas fa-laptop"></i>'
+                ],
+                [
+                    'name' => 'Moda',
+                    'slug' => Str::slug('Moda'),
+                    'icon' => '<i class="fas fa-tshirt"></i>'
+                ],
+            ],
+            'subcategories' => [
+                [
+                    'category_id' => 1,  
+                    'name' => 'Celulares y smartphones',
+                    'slug' => Str::slug('Celulares y smartphones'),
+                    'color' => true
+                ],
+                [
+                    'category_id' => 1,
+                    'name' => 'Accesorios para celulares',
+                    'slug' => Str::slug('Accesorios para celulares'),
+                ],
+            ],
+            'brandNames' => ['Samsung', 'Samsung2', 'Samsung3', 'Samsung4', 'Samsung5'],
+        ];
+
+        $result = $this->createAllData($data);
+
+        $this->browse(function (Browser $browser) use ($result) {
+            $products = $result['products'];
+
+            $browser->visit('/categories/celulares-y-tablets')
+            ->assertSee(
+                'Samsung Galaxy 1',
+                'Samsung Galaxy 2',
+                'Samsung Galaxy 3',
+                'Samsung Galaxy 4',
+                'Samsung Galaxy 5',
+            );
+        });
+    }
+    
 
 
 

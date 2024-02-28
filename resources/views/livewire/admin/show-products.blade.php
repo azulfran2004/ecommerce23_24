@@ -80,7 +80,7 @@
                                             @foreach($orders as $order)
                                             <?php $items = json_decode($order->content); ?>
                                             @foreach($items as $item)
-                                            @if($item->name == $product->name && $order->status == 2)
+                                            @if($item->name == $product->name && $order->status >1)
                                             
                                             <?php $cantidadTotal += $item->qty; ?>
                                             @endif
