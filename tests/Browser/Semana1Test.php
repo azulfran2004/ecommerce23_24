@@ -24,7 +24,7 @@ class Semana1Test extends DuskTestCase
         $data = [
             'categories' => [
                 [
-                    'name' => 'Celulares y tablet',
+                    'name' => 'Celulares y tablets',
                     'slug' => Str::slug('Celulares y tablets'),
                     'icon' => '<i class="fas fa-mobile-alt"></i>'
                 ],
