@@ -6,6 +6,8 @@ namespace Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+//Nuevo comentario
+
 class EjemploJaimeTest extends TestCase
 {
     /**
